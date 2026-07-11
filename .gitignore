@@ -67,7 +67,7 @@ compile_commands.json  # often regenerated, ignore to avoid clutter
 # Keep only specific configs if you deliberately share them:
 # !.vscode/settings.json
 # !.vscode/tasks.json
-# !.vscode/launch.json
+!.vscode/launch.json
 
 # ----- STM32CubeIDE / Eclipse remnants (if CubeMX ever generated them) -----
 .project
