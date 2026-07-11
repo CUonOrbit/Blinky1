@@ -92,4 +92,3 @@ compile_commands.json  # often regenerated, ignore to avoid clutter
 Thumbs.db
 
 .clangd
-CMakePresets.json
