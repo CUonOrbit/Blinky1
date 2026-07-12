@@ -63,7 +63,7 @@ compile_commands.json  # often regenerated, ignore to avoid clutter
 *.cmake                # only if you don't have custom CMake modules; be careful
 
 # ----- VS Code -----
-.vscode/
+.vscode/*
 # Keep only specific configs if you deliberately share them:
 # !.vscode/settings.json
 # !.vscode/tasks.json
