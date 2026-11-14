@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "fatfs.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -98,6 +99,7 @@ int main(void)
   MX_GPIO_Init();
   MX_ADC1_Init();
   MX_SPI2_Init();
+  MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
   LedExt_Init(&extLed, EXT_LED_GPIO_Port, EXT_LED_Pin, 250);   /* toggles every 250ms */
   LedExt_Init(&onboardLed, LED_GPIO_Port, LED_Pin, 500);       /* toggles every 500ms */
