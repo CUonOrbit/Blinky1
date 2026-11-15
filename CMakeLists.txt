@@ -54,6 +54,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     Core/Src/led_ext.c
     Core/Src/thermistor.c
+    FATFS/Target/user_diskio_spi.c
 )
 
 # Add include paths

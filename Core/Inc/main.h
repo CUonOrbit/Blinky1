@@ -61,11 +61,14 @@ void Error_Handler(void);
 #define LED_GPIO_Port GPIOC
 #define THERM_Pin GPIO_PIN_1
 #define THERM_GPIO_Port GPIOA
+#define SPI2_CS_Pin GPIO_PIN_9
+#define SPI2_CS_GPIO_Port GPIOA
 #define EXT_LED_Pin GPIO_PIN_5
 #define EXT_LED_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-
+#define SD_SPI_HANDLE hspi2
+void myprintf(const char *fmt, ...);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
