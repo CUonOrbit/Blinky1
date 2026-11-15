@@ -52,6 +52,13 @@ SPI_HandleTypeDef hspi2;
 LedExt_HandleTypeDef extLed;
 LedExt_HandleTypeDef onboardLed;
 Thermistor_HandleTypeDef therm;
+
+FATFS fs;           // Work area (file system object)
+FIL fil;            // File object
+FRESULT fresult;    // File function return code
+UINT bw, br;        // File write/read byte counts
+char read_buf[64];  // Buffer for reading back data
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,6 +112,33 @@ int main(void)
   LedExt_Init(&onboardLed, LED_GPIO_Port, LED_Pin, 500);       /* toggles every 500ms */
   //Thermistor_Init(&therm, &hadc1, 1000); /* read once per second */
   /* USER CODE END 2 */
+
+  /* User CODE BEGIN 2.5 */
+  
+    /* USER CODE BEGIN 2.5*/
+  fresult = f_mount(&fs, "", 1);
+
+  if (fresult == FR_OK) {
+      // 2. Create/open a file and write text
+      if (f_open(&fil, "test.txt", FA_CREATE_ALWAYS | FA_WRITE) == FR_OK) {
+          f_write(&fil, "STM32 SPI MicroSD OK!\r\n", 23, &bw);
+          f_close(&fil); // Flushes buffer and saves file
+      }
+
+      // 3. Re-open and read the text back
+      if (f_open(&fil, "test.txt", FA_READ) == FR_OK) {
+          f_read(&fil, read_buf, sizeof(read_buf) - 1, &br);
+          read_buf[br] = '\0'; // Null-terminate string
+          f_close(&fil);
+      }
+
+      // 4. Unmount when finished (optional, good before card removal)
+      f_mount(NULL, "", 0);
+  }
+  /* USER CODE END 2.5*/
+
+
+  /* User CODE BEGIN 2.5 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
