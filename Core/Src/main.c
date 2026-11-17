@@ -83,9 +83,8 @@ void myprintf(const char *fmt, ...) {
   vsnprintf(buffer, sizeof(buffer), fmt, args);
   va_end(args);
 
-  // int len = strlen(buffer);
-  // HAL_UART_Transmit(&huart2, (uint8_t*)buffer, len, -1);
-
+  printf("%s", buffer);
+  fflush(stdout);
 }
 /* USER CODE END 0 */
 
@@ -141,7 +140,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
   myprintf("\r\n~ SD card demo by kiwih ~\r\n\r\n");
 
   HAL_Delay(1000); //a short delay is important to let the SD card settle
@@ -154,8 +152,8 @@ int main(void)
   //Open the file system
   fres = f_mount(&FatFs, "", 1); //1=mount now
   if (fres != FR_OK) {
-  myprintf("f_mount error (%i)\r\n", fres);
-  while(1);
+    myprintf("f_mount error (%i)\r\n", fres);
+    while(1);
   }
 
   //Let's get some statistics from the SD card
@@ -198,34 +196,11 @@ int main(void)
   //Be a tidy kiwi - don't forget to close your file!
   f_close(&fil);
 
-  //Now let's try and write a file "write.txt"
-  fres = f_open(&fil, "write.txt", FA_WRITE | FA_OPEN_ALWAYS | FA_CREATE_ALWAYS);
-  if(fres == FR_OK) {
-  myprintf("I was able to open 'write.txt' for writing\r\n");
-  } else {
-  myprintf("f_open error (%i)\r\n", fres);
-  }
-
-  //Copy in a string
-  strncpy((char*)readBuf, "a new file is made!", 20);
-  UINT bytesWrote;
-  fres = f_write(&fil, readBuf, 19, &bytesWrote);
-  if(fres == FR_OK) {
-  myprintf("Wrote %i bytes to 'write.txt'!\r\n", bytesWrote);
-  } else {
-  myprintf("f_write error (%i)\r\n", fres);
-  }
-
-  //Be a tidy kiwi - don't forget to close your file!
-  f_close(&fil);
-
   //We're done, so de-mount the drive
   f_mount(NULL, "", 0);
-
   /* USER CODE END 3 */
 }
 }
-
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -393,7 +368,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : SPI2_CS_Pin */
   GPIO_InitStruct.Pin = SPI2_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(SPI2_CS_GPIO_Port, &GPIO_InitStruct);
 
